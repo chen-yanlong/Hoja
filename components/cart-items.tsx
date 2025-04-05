@@ -26,13 +26,15 @@ export function CartItems() {
     const selfApp = new SelfAppBuilder({
       appName: "Hoja", // Replace with your app's name
       scope: "birthday_verification", // Define your app's scope
-      endpoint: "https://hoja-swart.vercel.app/api/verify", // Replace with your app's endpoint URL
+      endpoint: "https://feaa-111-235-226-130.ngrok-free.app/api/verify",
+      // endpoint: "https://hoja-swart.vercel.app/api/verify", // Replace with your app's endpoint URL
+      endpointType: "https",
       userIdType: 'hex', // Example: use 'uuid' or 'hex' based on your user ID format
       userId: "0xC064a24Ec8ab00Bd67924d007b94FD8EebD4Bc25", // Replace with the user's ID (e.g., UUID or address)
       disclosures: {
         date_of_birth: true
       },
-      devMode: true,
+      devMode: false,
     }).build();
   
     // Get the universal deeplink
