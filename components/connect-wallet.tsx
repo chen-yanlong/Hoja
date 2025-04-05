@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { ethers } from "ethers"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -12,18 +13,28 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Wallet, LogOut, User, History } from "lucide-react"
 
+declare global {
+  interface Window {
+    ethereum?: any
+  }
+}
+
 export function ConnectWallet() {
   const [connected, setConnected] = useState(false)
   const [address, setAddress] = useState("")
 
   const connectWallet = async () => {
-    // This would normally connect to a real wallet
+    if (!window.ethereum) {
+      alert("Please install MetaMask!")
+      return
+    }
+
     try {
-      // Simulate wallet connection
-      setTimeout(() => {
-        setAddress("0x71C7656EC7ab88b098defB751B7401B5f6d8976F")
-        setConnected(true)
-      }, 500)
+      const provider = new ethers.BrowserProvider(window.ethereum)
+      const accounts = await provider.send("eth_requestAccounts", [])
+      const userAddress = accounts[0]
+      setAddress(userAddress)
+      setConnected(true)
     } catch (error) {
       console.error("Error connecting wallet:", error)
     }
@@ -37,6 +48,23 @@ export function ConnectWallet() {
   const shortenAddress = (addr: string) => {
     return addr.slice(0, 6) + "..." + addr.slice(-4)
   }
+
+  useEffect(() => {
+    if (window.ethereum && window.ethereum.selectedAddress) {
+      setAddress(window.ethereum.selectedAddress)
+      setConnected(true)
+    }
+
+    // Auto handle disconnects / account changes
+    window.ethereum?.on("accountsChanged", (accounts: string[]) => {
+      if (accounts.length > 0) {
+        setAddress(accounts[0])
+        setConnected(true)
+      } else {
+        disconnectWallet()
+      }
+    })
+  }, [])
 
   if (!connected) {
     return (
@@ -80,4 +108,3 @@ export function ConnectWallet() {
     </DropdownMenu>
   )
 }
-

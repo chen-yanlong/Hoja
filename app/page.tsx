@@ -9,40 +9,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-50 to-white dark:from-green-950/50 dark:to-background">
-          <div className="container px-6 md:px-8">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl/none">
-                    Discover & Review Restaurants with Crypto
-                  </h1>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Connect your wallet, find great food, pay with crypto at the table, and leave verified anonymous
-                    reviews.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button size="lg" className="bg-green-600 hover:bg-green-700">
-                    Explore Restaurants
-                  </Button>
-                  <Button size="lg" variant="outline" asChild>
-                    <Link href="/how-it-works">How It Works</Link>
-                  </Button>
-                </div>
-              </div>
-              <div className="flex items-center justify-center mt-8 lg:mt-0">
-                <img
-                  src="/placeholder.svg?height=550&width=450"
-                  alt="Hoja App Preview"
-                  width={550}
-                  height={450}
-                  className="rounded-lg object-cover shadow-xl"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+
 
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-6 md:px-8">
