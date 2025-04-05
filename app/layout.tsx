@@ -6,7 +6,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { CartProvider } from "@/hooks/use-cart"
 import { ProofsProvider } from "@/hooks/use-proofs"
 
-
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useCart } from "@/hooks/use-cart"
 import { Trash2, Plus, Minus, Wallet } from "lucide-react"
 import { PaymentModal } from "@/components/payment-modal"
+import { getUniversalLink, SelfAppBuilder } from '@selfxyz/core';
 
 export function CartItems() {
   const { items, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart()
@@ -18,6 +19,23 @@ export function CartItems() {
     } else {
       updateQuantity(itemId, newQuantity)
     }
+  }
+
+  function birthday() {
+    // Generate the Self app deeplink for birthday verification
+    const selfApp = new SelfAppBuilder({
+      appName: "Hoja", // Replace with your app's name
+      scope: "birthday_verification", // Define your app's scope
+      endpoint: "https://localhost:3000", // Replace with your app's endpoint URL
+      userIdType: 'hex', // Example: use 'uuid' or 'hex' based on your user ID format
+      userId: "0xC064a24Ec8ab00Bd67924d007b94FD8EebD4Bc25", // Replace with the user's ID (e.g., UUID or address)
+    }).build();
+  
+    // Get the universal deeplink
+    const deeplink = getUniversalLink(selfApp);
+  
+    // Redirect user to the Self app for birthday verification
+    window.location.href = deeplink;
   }
 
   if (items.length === 0) {
@@ -85,6 +103,9 @@ export function CartItems() {
           <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => setIsPaymentModalOpen(true)}>
             <Wallet className="mr-2 h-4 w-4" />
             Pay at the counter
+          </Button>
+          <Button variant="outline" className="w-full" onClick={birthday}>
+            It's your birthday?
           </Button>
           <Button variant="outline" className="w-full" onClick={clearCart}>
             Clear Cart

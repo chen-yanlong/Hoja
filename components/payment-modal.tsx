@@ -69,14 +69,10 @@ export function PaymentModal({ isOpen, onClose, totalAmount, items }: PaymentMod
 
   const network = networks.find((n) => n.id === selectedNetwork) || networks[0]
 
-
-
   const handlePayment = async () => {
     setPaymentStatus("processing")
-
     const provider = new ethers.BrowserProvider(window.ethereum)
     const signer = await provider.getSigner()
-
     const chainId = await provider.getNetwork().then((network) => network.chainId)
     if (chainId.toString() !== network.chainId.toString()) {
       await window.ethereum.request({
@@ -87,17 +83,16 @@ export function PaymentModal({ isOpen, onClose, totalAmount, items }: PaymentMod
     }
     const usdc = new ethers.Contract(network.usdcAddress, USDC_ABI, signer)
     const amountInWei = ethers.parseUnits(totalAmount.toString(), 6)
-
     const tx = await usdc.transfer("0xddAdE2642C66A757e3850d6E8F89B02F9c63f659", amountInWei)
     await tx.wait()
-
-
 
     setPaymentStatus("success")
 
     // After payment success, generate proof
     setTimeout(() => {
       setPaymentStatus("generating")
+
+      
 
       // Simulate proof generation
       setTimeout(() => {
