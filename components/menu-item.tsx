@@ -10,7 +10,7 @@ interface MenuItem {
   name: string
   price: string
   description: string
-  priceInEth: number
+  priceInUSD: number
 }
 
 interface MenuItemProps {
@@ -38,7 +38,7 @@ export function MenuItem({ item, restaurantId }: MenuItemProps) {
         id: item.id,
         name: item.name,
         price: item.price,
-        priceInEth: item.priceInEth,
+        priceInUSD: item.priceInUSD,
         quantity,
         restaurantId,
       })

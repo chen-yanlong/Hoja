@@ -79,7 +79,7 @@ export function CartItems() {
       <div className="border-t pt-4">
         <div className="flex items-center justify-between py-2">
           <span className="font-medium">Total</span>
-          <span className="font-mono font-medium text-green-600">{totalPrice.toFixed(4)} ETH</span>
+          <span className="font-mono font-medium text-green-600">{totalPrice.toFixed(4)} USD</span>
         </div>
         <div className="mt-4 space-y-2">
           <Button className="w-full bg-green-600 hover:bg-green-700" onClick={() => setIsPaymentModalOpen(true)}>

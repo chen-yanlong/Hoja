@@ -3,20 +3,17 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Star, MapPin, Wallet } from "lucide-react"
 
-export function RestaurantCard() {
-  // This would normally be populated with real data
-  const restaurant = {
-    id: Math.floor(Math.random() * 1000),
-    name: ["Crypto Bites", "Blockchain Bistro", "Satoshi's Kitchen", "Ethereum Eats", "Web3 Diner"][
-      Math.floor(Math.random() * 5)
-    ],
-    cuisine: ["Italian", "Japanese", "Mexican", "American", "Indian"][Math.floor(Math.random() * 5)],
-    rating: (3 + Math.random() * 2).toFixed(1),
-    reviewCount: Math.floor(Math.random() * 100) + 10,
-    distance: (Math.random() * 5).toFixed(1),
-    image: `/placeholder.svg?height=200&width=300&text=Restaurant`,
-  }
+type Restaurant = {
+  id: number
+  name: string
+  cuisine: string
+  rating: number
+  reviewCount: number
+  distance: number
+  image: string
+}
 
+export function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
   return (
     <Link href={`/restaurants/${restaurant.id}`}>
       <Card className="overflow-hidden transition-all hover:shadow-md h-full">
@@ -40,12 +37,12 @@ export function RestaurantCard() {
             <div className="flex items-center gap-4">
               <div className="flex items-center">
                 <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
-                <span className="text-sm font-medium">{restaurant.rating}</span>
+                <span className="text-sm font-medium">{restaurant.rating.toFixed(1)}</span>
                 <span className="text-sm text-muted-foreground">({restaurant.reviewCount})</span>
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
                 <MapPin className="mr-1 h-3 w-3" />
-                {restaurant.distance} km
+                {restaurant.distance.toFixed(1)} km
               </div>
             </div>
           </div>
@@ -64,4 +61,3 @@ export function RestaurantCard() {
     </Link>
   )
 }
-

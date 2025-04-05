@@ -5,6 +5,56 @@ import { Header } from "@/components/header"
 import { MapPin } from "lucide-react"
 
 export default function Home() {
+
+  const restaurants = [
+    {
+      id: 1,
+      name: "Cool Bistro",
+      cuisine: "Italian",
+      rating: 0,
+      reviewCount: 0,
+      distance: 1.8,
+      image: "/images/italia.png",
+      
+    },
+    {
+      id: 2,
+      name: "Ethereum Eats",
+      cuisine: "Korea",
+      rating: 0,
+      reviewCount: 0,
+      distance: 3.1,
+      image: "/images/korea.png",
+    },
+    {
+      id: 3,
+      name: "Satoshi's Kitchen",
+      cuisine: "Japanese",
+      rating: 0,
+      reviewCount: 0,
+      distance: 0.9,
+      image: "/images/america.png",
+    },
+    {
+      id: 4,
+      name: "Web3 Diner",
+      cuisine: "Mexican",
+      rating: 0,
+      reviewCount: 0,
+      distance: 2.7,
+      image: "/images/thai.png",
+    },
+    {
+      id: 5,
+      name: "Crypto Bites",
+      cuisine: "American",
+      rating: 0,
+      reviewCount: 0,
+      distance: 1.2,
+      image: "/images/taiwan.png",
+    },
+  ]
+  
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -32,8 +82,8 @@ export default function Home() {
               </div>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <RestaurantCard key={i} />
+              {restaurants.map((r) => (
+                <RestaurantCard key={r.id} restaurant={r} />
               ))}
             </div>
           </div>

@@ -6,7 +6,7 @@ export interface CartItem {
   id: number
   name: string
   price: string
-  priceInEth: number
+  priceInUSD: number
   quantity: number
   restaurantId: string
 }
@@ -31,7 +31,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Calculate totals whenever items change
   useEffect(() => {
     const itemCount = items.reduce((total, item) => total + item.quantity, 0)
-    const price = items.reduce((total, item) => total + item.priceInEth * item.quantity, 0)
+    const price = items.reduce((total, item) => total + item.priceInUSD * item.quantity, 0)
 
     setTotalItems(itemCount)
     setTotalPrice(price)
