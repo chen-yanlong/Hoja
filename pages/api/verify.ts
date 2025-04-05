@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             console.log("Extracted address from verification result:", address);
 
             // Connect to Celo network
-            const provider = new ethers.JsonRpcProvider("https://forno.celo.org");
+            const provider = new ethers.JsonRpcProvider("https://alfajores-forno.celo-testnet.org/");
             const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
             const contract = new ethers.Contract(contractAddress, abi, signer);
 
