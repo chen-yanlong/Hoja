@@ -31,7 +31,8 @@ export function CartItems() {
       userId: "0xC064a24Ec8ab00Bd67924d007b94FD8EebD4Bc25", // Replace with the user's ID (e.g., UUID or address)
       disclosures: {
         date_of_birth: true
-      }
+      },
+      devMode: true,
     }).build();
   
     // Get the universal deeplink
