@@ -26,9 +26,12 @@ export function CartItems() {
     const selfApp = new SelfAppBuilder({
       appName: "Hoja", // Replace with your app's name
       scope: "birthday_verification", // Define your app's scope
-      endpoint: "https://localhost:3000", // Replace with your app's endpoint URL
+      endpoint: "https://hoja-swart.vercel.app/", // Replace with your app's endpoint URL
       userIdType: 'hex', // Example: use 'uuid' or 'hex' based on your user ID format
       userId: "0xC064a24Ec8ab00Bd67924d007b94FD8EebD4Bc25", // Replace with the user's ID (e.g., UUID or address)
+      disclosures: {
+        date_of_birth: true
+      }
     }).build();
   
     // Get the universal deeplink
