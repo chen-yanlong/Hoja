@@ -83,6 +83,7 @@ export function PaymentModal({ isOpen, onClose, totalAmount, items }: PaymentMod
         method: "wallet_switchEthereumChain",
         params: [{ chainId: `0x${network.chainId.toString(16)}` }],
       })
+      window.location.reload()
     }
     const usdc = new ethers.Contract(network.usdcAddress, USDC_ABI, signer)
     const amountInWei = ethers.parseUnits(totalAmount.toString(), 6)
