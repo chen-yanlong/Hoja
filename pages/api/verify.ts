@@ -6,6 +6,9 @@ import {
 import { ethers } from 'ethers';
 import { abi } from '../../app/content/abi';
 
+// In-memory storage for birthday verification status
+const birthdayStatus: Record<string, boolean> = {};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         try {
@@ -20,17 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             // Contract details
             const contractAddress = "0x3c0EB6B70214447DC9Da98166caDb067Eb185a7d";
-
-            // Uncomment this to use the Self backend verifier for offchain verification instead
-            // const selfdVerifier = new SelfBackendVerifier(
-            //     'https://forno.celo.org',
-            //     "Self-Denver-Birthday",
-            //     "your ngrok endpoint",
-            //     "hex",
-            // //  true // If you want to use mock passport
-            // );
-            // const result = await selfdVerifier.verify(proof, publicSignals);
-            // console.log("Verification result:", result);
 
             const address = await getUserIdentifier(publicSignals, "hex");
             console.log("Extracted address from verification result:", address);
@@ -52,20 +44,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
                 await tx.wait();
                 console.log("Successfully called verifySelfProof function");
+
+                // Save birthday status in memory
+                birthdayStatus[address.toLowerCase()] = true;
+
                 res.status(200).json({
                     status: 'success',
                     result: true,
                     credentialSubject: {},
+                    address,
                 });
             } catch (error) {
                 console.error("Error calling verifySelfProof function:", error);
+                birthdayStatus[address.toLowerCase()] = false;
                 res.status(400).json({
                     status: 'error',
                     result: false,
                     message: 'Verification failed or date of birth not disclosed',
                     details: {},
                 });
-                throw error;
             }
         } catch (error) {
             console.error('Error verifying proof:', error);
@@ -76,6 +73,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 error: error instanceof Error ? error.message : 'Unknown error'
             });
         }
+    } else if (req.method === 'GET') {
+        const address = req.query.user?.toString().toLowerCase();
+        if (!address) return res.status(400).json({ message: 'Missing user address' });
+
+        const verified = birthdayStatus[address] || false;
+        res.status(200).json({ verified });
     } else {
         res.status(405).json({ message: 'Method not allowed' });
     }
